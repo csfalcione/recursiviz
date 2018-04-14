@@ -31,13 +31,12 @@ export class TreeSpy {
       color: {
         background: 'red'
       },
-      label: args.join(', '),
-      value: ''
+      label: args.join(', ')
     }
 
     let edge = {
       from: this.callStack[this.callStack.length - 1].id,
-      to: 0
+      to: node.id
     }
 
     this.callStack.push(node.id)
