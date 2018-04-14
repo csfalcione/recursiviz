@@ -4,6 +4,7 @@ import {CallNode} from './CallNode'
 import {CallEdge} from './CallEdge'
 
 let id = 0
+let edgeId = 0
 
 function createNode(node, edge) {
   return {
@@ -57,6 +58,7 @@ export class TreeSpy {
 
   protected makeParentEdge(node: CallNode): CallEdge {
     return {
+      id: ++edgeId,
       from: this.callStack[this.callStack.length - 1].id,
       to: node.id
     }
