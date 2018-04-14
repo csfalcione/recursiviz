@@ -1,33 +1,36 @@
-import "rxjs/add/operator/map"
-import {FrameStream} from "./FrameStream"
+import 'rxjs/add/operator/map'
+import {FrameStream} from './FrameStream'
+
+let id = 0
 
 export class TreeSpy {
 
-    root = { children: [] }
-    callStack = [this.root]
+  root = {children: []}
+  callStack = [this.root]
 
-    constructor(public frameStream: FrameStream) {}
+  constructor(public frameStream: FrameStream) {
+  }
 
-    onCall({ args }) {
-        let node = {
-            color: 'red',
-            args: args.join(', '),
-            value: '',
-            children: []
-        }
-
-        this.callStack[this.callStack.length - 1].children.push(node)
-        this.callStack.push(node)
-
-        this.frameStream.changes$.next(this.root)
-        return node
+  onCall({args}) {
+    let node = {
+      color: 'red',
+      text: args.join(', '),
+      value: '',
+      children: []
     }
 
-    onEval({ node, value }) {
-        node.value = value
-        node.color = 'green'
-        this.frameStream.changes$.next(this.root)
-        this.callStack.pop()
-    }
+    this.callStack[this.callStack.length - 1].children.push(node)
+    this.callStack.push(node)
+
+    this.frameStream.changes$.next(this.root)
+    return node
+  }
+
+  onEval({node, value}) {
+    node.value = value
+    node.color = 'green'
+    this.frameStream.changes$.next(this.root)
+    this.callStack.pop()
+  }
 
 }
