@@ -1,9 +1,11 @@
 import 'rxjs/add/operator/map'
 import {FrameStream} from './FrameStream'
+import {CallNode} from './CallNode'
+import {CallEdge} from './CallEdge'
 
 let id = 0
 
-function createNode(node, edge){
+function createNode(node, edge) {
   return {
     type: 'create',
     node,
@@ -26,18 +28,8 @@ export class TreeSpy {
   constructor(public frameStream: FrameStream) {}
 
   onCall({args}) {
-    let node = {
-      id: ++id,
-      color: {
-        background: 'red'
-      },
-      label: args.join(', ')
-    }
-
-    let edge = {
-      from: this.callStack[this.callStack.length - 1].id,
-      to: node.id
-    }
+    let node: CallNode = this.defaultNode(args.join(', '))
+    let edge: CallEdge = this.makeParentEdge(node)
 
     this.callStack.push(node.id)
     this.frameStream.changes$.next(createNode(node, edge))
@@ -48,13 +40,26 @@ export class TreeSpy {
 
     let old = { ...node }
 
-    node.label = value
-    node.color = {
-      background: 'green'
-    }
+    node.label += '\n' + value
+    node.color = 'green'
 
     this.frameStream.changes$.next(editNode(old, node))
     this.callStack.pop()
+  }
+
+  protected defaultNode(label: string): CallNode {
+    return {
+      id: ++id,
+      color: 'red',
+      label: label
+    }
+  }
+
+  protected makeParentEdge(node: CallNode): CallEdge {
+    return {
+      from: this.callStack[this.callStack.length - 1].id,
+      to: node.id
+    }
   }
 
 }
