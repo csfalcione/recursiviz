@@ -3,33 +3,58 @@ import {FrameStream} from './FrameStream'
 
 let id = 0
 
+function createNode(node, edge){
+  return {
+    type: 'create',
+    node,
+    edge
+  }
+}
+
+function editNode(old, node) {
+  return {
+    type: 'edit',
+    old,
+    node
+  }
+}
+
 export class TreeSpy {
 
-  root = {children: []}
-  callStack = [this.root]
+  callStack = []
 
-  constructor(public frameStream: FrameStream) {
-  }
+  constructor(public frameStream: FrameStream) {}
 
   onCall({args}) {
     let node = {
-      color: 'red',
-      text: args.join(', '),
-      value: '',
-      children: []
+      id: ++id,
+      color: {
+        background: 'red'
+      },
+      label: args.join(', '),
+      value: ''
     }
 
-    this.callStack[this.callStack.length - 1].children.push(node)
-    this.callStack.push(node)
+    let edge = {
+      from: this.callStack[this.callStack.length - 1].id,
+      to: 0
+    }
 
-    this.frameStream.changes$.next(this.root)
+    this.callStack.push(node.id)
+    this.frameStream.changes$.next(createNode(node, edge))
     return node
   }
 
   onEval({node, value}) {
-    node.value = value
-    node.color = 'green'
-    this.frameStream.changes$.next(this.root)
+
+    let old = { ...node }
+
+    node.label = value
+    node.color = {
+      background: 'green'
+    }
+
+    this.frameStream.changes$.next(editNode(old, node))
     this.callStack.pop()
   }
 
