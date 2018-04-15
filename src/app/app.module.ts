@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {AuthModule} from './core/auth/auth.module';
 import {PagesModule} from './pages/pages.module';
 import {RouterModule} from '@angular/router';
+import {CommonModule} from '@angular/common'
 
 
 @NgModule({

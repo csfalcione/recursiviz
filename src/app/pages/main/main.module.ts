@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { MainComponent } from './main.component';
-import { WelcomeComponent } from './welcome/welcome.component';
-import {RouterModule} from '@angular/router';
-import {routes} from './main.routes';
-import { VisualizerComponent } from './visualizer/visualizer.component';
+import {NgModule} from '@angular/core'
+import {CommonModule} from '@angular/common'
+import {NavbarComponent} from './shared/navbar/navbar.component'
+import {MainComponent} from './main.component'
+import {WelcomeComponent} from './welcome/welcome.component'
+import {RouterModule} from '@angular/router'
+import {routes} from './main.routes'
+import {VisualizerComponent} from './visualizer/visualizer.component'
 
 @NgModule({
   imports: [
@@ -17,4 +17,5 @@ import { VisualizerComponent } from './visualizer/visualizer.component';
     NavbarComponent
   ]
 })
-export class MainModule { }
+export class MainModule {
+}
