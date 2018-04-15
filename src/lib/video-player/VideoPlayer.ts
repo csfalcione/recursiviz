@@ -19,6 +19,11 @@ export class VideoPlayer {
     if(this.frames.length === 1) this.forward()
   }
 
+  public clearFrames() {
+    this.frames = []
+    this.curFrame = 0
+  }
+
   public play() {
     this.playDirection = 1
     this.animate()

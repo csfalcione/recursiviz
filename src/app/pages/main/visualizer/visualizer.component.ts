@@ -21,13 +21,30 @@ export class VisualizerComponent implements OnInit {
   text: string = CODE_STUB
 
   ngOnInit() {
-    const graph = new AppGraph('graph-canvas')
-    this.player = new VideoPlayer(graph)
-    this.mockData()
+    this.player = new VideoPlayer(new AppGraph('graph-canvas'))
+
+    function fibonacci(fibonacci, n) {
+      if(n <= 2) return 1
+      return fibonacci(n - 1) + fibonacci(n - 2)
+    }
   }
 
   submitCode(argString, codeString) {
-    console.log(argString, codeString)
+    let recursiviz = { entrypoint: null }
+    eval(codeString)
+    let args = eval(argString)
+    if(recursiviz.entrypoint === null) return alert("No entrypoint set!")
+    if(!Array.isArray(args)) return alert("Invalid arguments!")
+
+    this.player = new VideoPlayer(new AppGraph('graph-canvas'))
+
+    let fs = new FrameStream()
+    let ts = new TreeSpy(fs)
+    let rv = new RecursiViz(ts)
+
+    fs.frames$.do( _ => console.log(_)).subscribe( frame => this.player.addFrame(frame) )
+    rv.visualize(recursiviz.entrypoint, args)
+    this.player.play()
   }
 
   mockData() {
