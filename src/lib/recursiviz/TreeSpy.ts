@@ -41,7 +41,7 @@ export class TreeSpy {
     let old = { ...node }
     let newNode = { ...node }
 
-    newNode.label += '\n' + value
+    newNode.label += ' => ' + value
     newNode.color = 'lightgreen'
 
     this.frameStream.changes$.next(editNode(old, newNode))
