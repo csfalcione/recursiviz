@@ -3,9 +3,22 @@
   <div id="main-wrapper">
 
     <div id="code-panel">
+
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" #argStringInput class="form-control" name="" placeholder="Enter JS Arguments.." value="[ 2 ]">
+          <span class="input-group-btn">
+            <button (click)="submitCode(argStringInput.value, text)" type="submit" class="btn btn-primary">
+              <i class="icon wb-upload"></i> Submit Code </button>
+          </span>
+        </div>
+      </div>
+
+
       <div ace-editor
            [(text)]="text"
-           style="height: 100%">
+           mode="javascript"
+           style="height: 400px; font-size: 18px">
       </div>
     </div>
 

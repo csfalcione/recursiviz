@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core'
 import {AppGraph} from '../../../../lib/app-graph/AppGraph'
 import {VideoPlayer} from '../../../../lib/video-player/VideoPlayer'
 import {FrameStream} from '../../../../lib/recursiviz/FrameStream'
@@ -6,6 +6,7 @@ import {TreeSpy} from '../../../../lib/recursiviz/TreeSpy'
 import {RecursiViz} from '../../../../lib/recursiviz/RecursiViz'
 
 import 'rxjs/add/operator/do'
+import {CODE_STUB} from './default-text'
 
 @Component({
   selector: 'app-visualizer',
@@ -14,13 +15,19 @@ import 'rxjs/add/operator/do'
 })
 export class VisualizerComponent implements OnInit {
 
+  @ViewChild('editor') editor;
+
   player: VideoPlayer
-  text: string
+  text: string = CODE_STUB
 
   ngOnInit() {
     const graph = new AppGraph('graph-canvas')
     this.player = new VideoPlayer(graph)
     this.mockData()
+  }
+
+  submitCode(argString, codeString) {
+    console.log(argString, codeString)
   }
 
   mockData() {
@@ -34,7 +41,7 @@ export class VisualizerComponent implements OnInit {
     let rv = new RecursiViz(ts)
 
     fs.frames$.do( _ => console.log(_)).subscribe( frame => this.player.addFrame(frame) )
-    rv.visualize(myFunc, [4])
+    rv.visualize(myFunc, [10])
   }
 
 }
