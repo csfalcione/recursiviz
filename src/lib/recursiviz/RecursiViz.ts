@@ -4,17 +4,20 @@ export class RecursiViz {
 
     func
 
-    visualizeText(userInput: string, funcName: string, userArgs: string[]) {
+    visualizeText(userInput: string, funcName: string, userArgs: string) {
       const args = this.parseArgs(userArgs)
+      console.log(args)
 
       userInput = this.rewriteUserInput(userInput, funcName, 'recurse')
+      console.log(userInput)
+      let recurse = this.recurse.bind(this)
+      let userFunc
       eval(userInput)
-      const userFunc = eval(funcName)
       this.visualize(userFunc, ...args)
     }
 
-    public parseArgs(userArgs: string[]): any[] {
-      return userArgs.map(eval);
+    public parseArgs(userArgs: string): any[] {
+      return eval(userArgs)
     }
 
     public rewriteUserInput(input: string, funcName: string, newName): string {
@@ -22,11 +25,11 @@ export class RecursiViz {
       const replaceExp = new RegExp(funcName, 'g')
 
       const firstUsage = input.match(findExp)[0]
-      let remainder = input.slice(firstUsage.length)
+      let remainder = input.slice(firstUsage.length + 1)
 
       remainder = remainder.replace(replaceExp, newName)
 
-      return firstUsage + remainder
+      return firstUsage + remainder + '\nuserFunc = ' + funcName
     }
 
     visualize(myRecursiveFunction, ...args) {
@@ -36,7 +39,7 @@ export class RecursiViz {
 
     recurse(...args) {
         let node = this.treeSpy.onCall({ args })
-        let result = this.func(this.recurse.bind(this), ...args)
+        let result = this.func(/*this.recurse.bind(this),*/ ...args)
         this.treeSpy.onEval({ node, value: result })
         return result
     }

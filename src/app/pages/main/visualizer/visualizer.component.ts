@@ -23,42 +23,19 @@ export class VisualizerComponent implements OnInit {
   ngOnInit() {
     this.player = new VideoPlayer(new AppGraph('graph-canvas'))
 
-    function fibonacci(fibonacci, n) {
-      if(n <= 2) return 1
-      return fibonacci(n - 1) + fibonacci(n - 2)
-    }
   }
 
   submitCode(argString, codeString) {
-    let recursiviz = { entrypoint: null }
-    eval(codeString)
-    let args = eval(argString)
-    if(recursiviz.entrypoint === null) return alert("No entrypoint set!")
-    if(!Array.isArray(args)) return alert("Invalid arguments!")
-
     this.player = new VideoPlayer(new AppGraph('graph-canvas'))
 
     let fs = new FrameStream()
     let ts = new TreeSpy(fs)
     let rv = new RecursiViz(ts)
 
-    fs.frames$.do( _ => console.log(_)).subscribe( frame => this.player.addFrame(frame) )
-    rv.visualize(recursiviz.entrypoint, args)
+    fs.frames$/*.do( _ => console.log(_))*/.subscribe( frame => this.player.addFrame(frame) )
+    rv.visualizeText(codeString, 'fibonacci', argString)
     this.player.play()
   }
 
-  mockData() {
-    let myFunc = (recurse, n) => {
-      if(n <= 2) return 1
-      return recurse(n - 1) + recurse(n - 2)
-    }
-
-    let fs = new FrameStream()
-    let ts = new TreeSpy(fs)
-    let rv = new RecursiViz(ts)
-
-    fs.frames$.do( _ => console.log(_)).subscribe( frame => this.player.addFrame(frame) )
-    rv.visualize(myFunc, [10])
-  }
 
 }
