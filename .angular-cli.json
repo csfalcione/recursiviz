@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "v2.recursiviz"
+    "name": "hope2go"
   },
   "apps": [
     {
@@ -19,9 +19,20 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "../src/assets/css/bootstrap.css",
+        "../src/assets/css/bootstrap-extend.css",
+        "../src/assets/css/site.css",
+        "../src/assets/fonts/web-icons/web-icons.min.css",
+        "../src/assets/fonts/font-awesome/font-awesome.min.css",
+        "../src/assets/fonts/brand-icons/brand-icons.min.css",
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../src/assets/vendor/jquery/jquery.js",
+        "../src/assets/vendor/popper-js/umd/popper.min.js",
+        "../src/assets/vendor/bootstrap/bootstrap.js",
+        "../src/assets/vendor/animsition/animsition.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -54,7 +65,24 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "component": {}
+    "styleExt": "scss",
+    "class": {
+      "spec": false
+    },
+    "component": {
+      "spec": false
+    },
+    "directive": {
+      "spec": false
+    },
+    "module": {
+      "spec": false
+    },
+    "pipe": {
+      "spec": false
+    },
+    "service": {
+      "spec": false
+    }
   }
 }

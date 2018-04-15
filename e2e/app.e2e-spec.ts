@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('v2.recursiviz App', () => {
+describe('hope2go App', () => {
   let page: AppPage;
 
   beforeEach(() => {
