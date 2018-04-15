@@ -63,7 +63,6 @@ export class VideoPlayer {
   }
 
   public back() {
-    console.log(this.curFrame, this.frames)
     if(this.curFrame <= 1) return
     event = this.frames[--this.curFrame]
     this.graph.undo(event)

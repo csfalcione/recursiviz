@@ -42,7 +42,10 @@ export class TreeSpy {
     let newNode = { ...node }
 
     newNode.label += ' => ' + value
-    newNode.color = 'lightgreen'
+    newNode.color = {
+      background: 'lightgreen',
+      border: 'black'
+    }
 
     this.frameStream.changes$.next(editNode(old, newNode))
     this.callStack.pop()
@@ -53,8 +56,10 @@ export class TreeSpy {
       id: ++id,
       level: this.callStack.length,
       color: {
-        background: 'pink'
+        background: 'pink',
+        border: 'black'
       },
+      shape: 'box',
       label: label
     }
   }

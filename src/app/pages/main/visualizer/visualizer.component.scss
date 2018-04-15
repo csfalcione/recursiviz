@@ -1,3 +1,5 @@
+$canvas_background: 'black';
+
 html, body {
   margin: 0;
   padding: 0;
@@ -27,7 +29,7 @@ html, body {
 
 #viz-panel {
   flex-basis: 70%;
-  background: lightpink;
+  background: $canvas_background;
   height: 100%;
 }
 
@@ -38,7 +40,7 @@ html, body {
 }
 
 #graph-panel {
-  background: white;
+  background: $canvas_background;
   flex-grow: 1;
   height: 100px;
 }

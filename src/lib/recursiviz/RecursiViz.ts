@@ -1,37 +1,33 @@
 export class RecursiViz {
 
-    constructor(public treeSpy) {}
+  constructor(public treeSpy) {
+  }
 
-    func
+  func
 
-    visualizeText(userInput: string, funcName: string, userArgs: string) {
-      const args = this.parseArgs(userArgs)
-      userInput = this.rewriteUserInput(userInput, funcName, 'recurse')
+  visualizeText(userInput: string, funcName: string, userArgs: string) {
+    if (userArgs.trim() === '') userArgs = '[]'
 
-      let recurse = this.recurse.bind(this)
-      let userFunc
-      eval(userInput)
-      this.visualize(userFunc, ...args)
-    }
+    let recurse = this.recurse.bind(this)
+    let entrypoint
+    eval(userInput)
+    let args = eval(userArgs)
+    if (!entrypoint) return alert('No function exported!')
+    if (!Array.isArray(args)) return alert('Invalid args!')
 
-    public parseArgs(userArgs: string): any[] {
-      return eval(userArgs)
-    }
+    this.visualize(entrypoint, ...args)
+  }
 
-    public rewriteUserInput(input: string, funcName: string, newName): string {
-      return input + '\nuserFunc = ' + funcName
-    }
+  visualize(myRecursiveFunction, ...args) {
+    this.func = myRecursiveFunction
+    this.recurse(...args)
+  }
 
-    visualize(myRecursiveFunction, ...args) {
-        this.func = myRecursiveFunction
-        this.recurse(...args)
-    }
-
-    recurse(...args) {
-        let node = this.treeSpy.onCall({ args })
-        let result = this.func(this.recurse.bind(this), ...args)
-        this.treeSpy.onEval({ node, value: result })
-        return result
-    }
+  recurse(...args) {
+    let node = this.treeSpy.onCall({args})
+    let result = this.func(this.recurse.bind(this), ...args)
+    this.treeSpy.onEval({node, value: result})
+    return result
+  }
 
 }

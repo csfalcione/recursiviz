@@ -22,7 +22,6 @@ export class VisualizerComponent implements OnInit {
 
   ngOnInit() {
     this.player = new VideoPlayer(new AppGraph('graph-canvas'))
-
   }
 
   submitCode(argString, codeString) {
