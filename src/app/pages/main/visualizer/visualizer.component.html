@@ -6,7 +6,7 @@
 
       <div class="form-group">
         <div class="input-group">
-          <input type="text" #argStringInput class="form-control" name="" placeholder="Enter JS Arguments.." value="[ 5 ]">
+          <input type="text" #argStringInput class="form-control" name="" placeholder="Enter JS Arguments.." [(ngModel)]="args">
           <span class="input-group-btn">
             <button (click)="submitCode(argStringInput.value, text)" type="submit" class="btn btn-primary">
               <i class="icon wb-upload"></i> Submit Code </button>
@@ -40,19 +40,19 @@
         <div id="controls-panel">
 
           <div id="controls-wrapper">
-            <button *ngIf="!player.playing" (click)="player.play()" type="button" class="btn btn-floating btn-success" title="play">
+            <button *ngIf="!player || !player.playing" (click)="play()" type="button" class="btn btn-floating btn-success" title="play">
               <i class="icon fa-play"></i></button>
 
             <button *ngIf="player.playing" (click)="player.pause()" type="button" class="btn btn-floating btn-danger" title="stop">
               <i class="icon fa-pause"></i></button>
 
-            <button (click)="player.startOver()" type="button" class="btn btn-floating btn-warning" title="start over">
+            <button *ngIf="player" (click)="player.startOver()" type="button" class="btn btn-floating btn-warning" title="start over">
               <i class="icon fa-refresh"></i></button>
 
-            <button (click)="player.back()" type="button" class="btn btn-floating btn-primary" title="step backward">
+            <button *ngIf="player" (click)="player.back()" type="button" class="btn btn-floating btn-primary" title="step backward">
               <i class="icon fa-angle-double-left"></i></button>
 
-            <button (click)="player.forward()" type="button" class="btn btn-floating btn-primary" title="step forward">
+            <button *ngIf="player" (click)="player.forward()" type="button" class="btn btn-floating btn-primary" title="step forward">
               <i class="icon fa-angle-double-right"></i></button>
 
           </div>

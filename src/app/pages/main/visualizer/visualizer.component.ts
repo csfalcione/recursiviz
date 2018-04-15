@@ -15,24 +15,39 @@ import {CODE_STUB} from './default-text'
 })
 export class VisualizerComponent implements OnInit {
 
-  @ViewChild('editor') editor;
+  @ViewChild('editor') editor
 
   player: VideoPlayer
   text: string = CODE_STUB
+  args = '[ 5 ]'
 
   rv: RecursiViz
 
   ngOnInit() {
+  }
+
+  play() {
+    if (this.player === undefined) {
+      this.submitCode()
+      return
+    }
+    this.player.play()
+  }
+
+  initPlayer() {
     this.player = new VideoPlayer(new AppGraph('graph-canvas'))
 
     let fs = new FrameStream()
     let ts = new TreeSpy(fs)
     this.rv = new RecursiViz(ts)
 
-    fs.frames$.subscribe( frame => this.player.addFrame(frame) )
+    fs.frames$.subscribe(frame => this.player.addFrame(frame))
   }
 
-  submitCode(argString, codeString) {
+  submitCode() {
+    let argString = this.args
+    let codeString = this.text
+    this.initPlayer()
     if (argString.trim() === '') argString = '[]'
 
     let entrypoint
@@ -47,15 +62,15 @@ export class VisualizerComponent implements OnInit {
   }
 
   saveSnippet() {
-    let key = prompt("Enter the snippet key: ")
+    let key = prompt('Enter the snippet key: ')
     localStorage[key] = this.text
-    alert("Saved!")
+    alert('Saved!')
   }
 
   loadSnippet() {
-    let key = prompt("Enter the snippet key: ")
+    let key = prompt('Enter the snippet key: ')
     let snippet = localStorage[key]
-    if(!snippet) return alert('No snippet found!')
+    if (!snippet) return alert('No snippet found!')
     this.text = snippet
   }
 
