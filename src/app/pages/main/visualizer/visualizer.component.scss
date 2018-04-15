@@ -1,0 +1,58 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  height: 100%;
+}
+
+#visualizer-container {
+  max-width: 100% !important;
+}
+
+#main-wrapper {
+  display: flex;
+  height: 100%;
+  min-height: 100%;
+}
+
+/* LAYER ONE */
+#code-panel {
+  flex-basis: 30%;
+  background: lightcyan;
+  height: 100%;
+}
+
+#viz-panel {
+  flex-basis: 70%;
+  background: lightpink;
+  height: 100%;
+}
+
+#viz-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#graph-panel {
+  background: white;
+  flex-grow: 1;
+  height: 100px;
+}
+
+#controls-panel {
+  padding: 10px;
+  background: #d5ccfc;
+}
+
+#controls-wrapper {
+  display: flex;
+  justify-content: center;
+
+  button {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}

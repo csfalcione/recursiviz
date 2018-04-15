@@ -7,10 +7,13 @@ import {RouterModule} from '@angular/router'
 import {routes} from './main.routes'
 import {VisualizerComponent} from './visualizer/visualizer.component'
 
+import { AceEditorModule } from 'ng2-ace-editor';
+
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    AceEditorModule
   ],
   declarations: [NavbarComponent, MainComponent, WelcomeComponent, VisualizerComponent],
   exports: [

@@ -15,9 +15,10 @@ import 'rxjs/add/operator/do'
 export class VisualizerComponent implements OnInit {
 
   player: VideoPlayer
+  text: string
 
   ngOnInit() {
-    const graph = new AppGraph('visualizer-container')
+    const graph = new AppGraph('graph-canvas')
     this.player = new VideoPlayer(graph)
     this.mockData()
   }
