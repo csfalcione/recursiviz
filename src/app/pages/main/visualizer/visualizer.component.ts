@@ -76,4 +76,9 @@ export class VisualizerComponent implements OnInit {
     this.text = snippet
   }
 
+  shouldShowPlayButton() {
+    if (this.player === undefined) return true
+    return !this.player.playing
+  }
+
 }

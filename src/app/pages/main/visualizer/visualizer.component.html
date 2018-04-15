@@ -47,10 +47,10 @@
           <div id="controls-wrapper">
 
 
-            <button *ngIf="!player || !player.playing" (click)="play()" type="button" class="btn btn-floating btn-success" title="play">
+            <button *ngIf="shouldShowPlayButton()" (click)="play()" type="button" class="btn btn-floating btn-success" title="play">
               <i class="icon fa-play"></i></button>
 
-            <button *ngIf="player.playing" (click)="player.pause()" type="button" class="btn btn-floating btn-danger" title="stop">
+            <button *ngIf="player?.playing" (click)="player.pause()" type="button" class="btn btn-floating btn-danger" title="stop">
               <i class="icon fa-pause"></i></button>
 
             <button *ngIf="player" (click)="player.startOver()" type="button" class="btn btn-floating btn-warning" title="start over">
