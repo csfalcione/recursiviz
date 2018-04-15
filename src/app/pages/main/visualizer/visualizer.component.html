@@ -1,0 +1,39 @@
+<div class="page">
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-4">
+        <h2>Code Editor:</h2>
+        <pre>
+        <br/>
+        <br/>
+        <br/>
+      </pre>
+      </div>
+
+      <div class="col-8" style="background-color: white">
+
+        <div id="visualizer-container" style="height: 100%"></div>
+
+        <div class="example example-buttons">
+
+          <button (click)="player.play()" type="button" class="btn btn-floating btn-success" title="play">
+            <i class="icon fa-play"></i></button>
+
+          <button (click)="player.pause()" type="button" class="btn btn-floating btn-danger" title="stop">
+            <i class="icon fa-pause"></i></button>
+
+          <button (click)="player.back()" type="button" class="btn btn-floating btn-danger" title="step backward">
+            <i class="icon fa-angle-double-left"></i></button>
+
+          <button (click)="player.forward()" type="button" class="btn btn-floating btn-primary" title="step forward">
+            <i class="icon fa-angle-double-right"></i></button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
