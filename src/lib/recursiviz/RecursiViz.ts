@@ -21,15 +21,7 @@ export class RecursiViz {
     }
 
     public rewriteUserInput(input: string, funcName: string, newName): string {
-      const findExp = new RegExp('.*?' + funcName)
-      const replaceExp = new RegExp(funcName, 'g')
-
-      const firstUsage = input.match(findExp)[0]
-      let remainder = input.slice(firstUsage.length + 1)
-
-      remainder = remainder.replace(replaceExp, newName)
-
-      return firstUsage + remainder + '\nuserFunc = ' + funcName
+      return input + '\nuserFunc = ' + funcName
     }
 
     visualize(myRecursiveFunction, ...args) {
@@ -39,7 +31,7 @@ export class RecursiViz {
 
     recurse(...args) {
         let node = this.treeSpy.onCall({ args })
-        let result = this.func(/*this.recurse.bind(this),*/ ...args)
+        let result = this.func(this.recurse.bind(this), ...args)
         this.treeSpy.onEval({ node, value: result })
         return result
     }
