@@ -24,6 +24,10 @@ export class VideoPlayer {
     this.animate()
   }
 
+  public startOver() {
+    while(this.curFrame > 1) this.back()
+  }
+
   public rewind() {
     this.playDirection = -1
     this.animate()

@@ -26,7 +26,10 @@
             <button *ngIf="player.playing" (click)="player.pause()" type="button" class="btn btn-floating btn-danger" title="stop">
               <i class="icon fa-pause"></i></button>
 
-            <button (click)="player.back()" type="button" class="btn btn-floating btn-danger" title="step backward">
+            <button (click)="player.startOver()" type="button" class="btn btn-floating btn-warning" title="step backward">
+              <i class="icon fa-refresh"></i></button>
+
+            <button (click)="player.back()" type="button" class="btn btn-floating btn-primary" title="step backward">
               <i class="icon fa-angle-double-left"></i></button>
 
             <button (click)="player.forward()" type="button" class="btn btn-floating btn-primary" title="step forward">
