@@ -1,5 +1,8 @@
 export interface CallNode {
-  id: number,
-  color: string,
+  id: number
+  color: {
+    background: string
+  }
+  level: number
   label: string
 }

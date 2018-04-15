@@ -12,7 +12,7 @@ export class RecursiViz {
     recurse(...args) {
         let node = this.treeSpy.onCall({ args })
         let result = this.func(this.recurse.bind(this), ...args)
-        this.treeSpy.onEval({ node, result })
+        this.treeSpy.onEval({ node, value: result })
         return result
     }
 

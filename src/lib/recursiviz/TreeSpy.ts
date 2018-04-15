@@ -38,28 +38,32 @@ export class TreeSpy {
   }
 
   onEval({node, value}) {
-
     let old = { ...node }
+    let newNode = { ...node }
 
-    node.label += '\n' + value
-    node.color = 'green'
+    newNode.label += '\n' + value
+    newNode.color = 'lightgreen'
 
-    this.frameStream.changes$.next(editNode(old, node))
+    this.frameStream.changes$.next(editNode(old, newNode))
     this.callStack.pop()
   }
 
   protected defaultNode(label: string): CallNode {
     return {
       id: ++id,
-      color: 'red',
+      level: this.callStack.length,
+      color: {
+        background: 'pink'
+      },
       label: label
     }
   }
 
   protected makeParentEdge(node: CallNode): CallEdge {
+    if(this.callStack.length <= 0) return
     return {
       id: ++edgeId,
-      from: this.callStack[this.callStack.length - 1].id,
+      from: this.callStack[this.callStack.length - 1],
       to: node.id
     }
   }

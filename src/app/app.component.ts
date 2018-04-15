@@ -5,6 +5,9 @@ import {TreeSpy} from '../lib/recursiviz/TreeSpy';
 
 import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/delay'
+import { interval } from 'rxjs/observable/interval';
+import {Observable} from 'rxjs/Observable'
+import 'rxjs/add/operator/takeWhile'
 
 declare let vis;
 
@@ -14,73 +17,113 @@ declare let vis;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
+
+  treeOptions = {
+    edges: {
+      smooth: {
+        type: 'cubicBezier',
+        forceDirection: 'vertical',
+        roundness: 0.4
+      }
+    },
+    layout: {
+      hierarchical: {
+        direction: 'UD'
+      }
+    },
+    physics: false
+  }
+
+  networkGraph;
+  data;
+
+  playing = false
+  currentFrame = -1
+  frames = []
 
   ngOnInit() {
-    let nodes = [];
-    let edges = [];
-    var connectionCount = [];
+    this.data = {
+      nodes: new vis.DataSet(),
+      edges: new vis.DataSet()
+    };
 
-    // randomly create some nodes and edges
-    for (var i = 0; i < 15; i++) {
-      nodes.push({id: i, label: String(i)});
+    this.networkGraph = new vis.Network(
+      document.getElementById('mynetwork'),
+      this.data,
+      this.treeOptions
+    );
+
+    this.compute()
+  }
+
+  stepForward() {
+    if(this.currentFrame === this.frames.length - 1) return
+    let frame = this.frames[++this.currentFrame]
+    switch (frame.type) {
+      case 'create':
+        console.log(frame)
+        this.data.nodes.add(frame.node)
+        if(frame.edge)
+          this.data.edges.add(frame.edge)
+        break
+      case 'edit':
+        this.data.nodes.update(frame.node)
+        break
     }
-    edges.push({from: 0, to: 1});
-    edges.push({from: 0, to: 6});
-    edges.push({from: 0, to: 13});
-    edges.push({from: 0, to: 11});
-    edges.push({from: 1, to: 2});
-    edges.push({from: 2, to: 3});
-    edges.push({from: 2, to: 4});
-    edges.push({from: 3, to: 5});
-    edges.push({from: 1, to: 10});
-    edges.push({from: 1, to: 7});
-    edges.push({from: 2, to: 8});
-    edges.push({from: 2, to: 9});
-    edges.push({from: 3, to: 14});
-    edges.push({from: 1, to: 12});
+  }
 
+  stepBack() {
+    if(this.currentFrame <= 0) return
+    let frame = this.frames[this.currentFrame--]
+    switch (frame.type) {
+      case 'create':
+        this.data.nodes.remove(frame.node.id)
+        this.data.edges.remove(frame.edge.id)
+        break
+      case 'edit':
+        this.data.nodes.update(frame.old)
+        break
+    }
+  }
 
-    // create a network
-    var container = document.getElementById('mynetwork');
-    var data = {
-      nodes: nodes,
-      edges: edges
-    };
+  play() {
+    this.playing = true
+    interval(100)
+      .takeWhile(() => this.playing)
+      .subscribe( _ => this.stepForward())
+  }
 
-    var options = {
-      edges: {
-        smooth: {
-          type: 'cubicBezier',
-          forceDirection: 'vertical',
-          roundness: 0.4
-        }
-      },
-      layout: {
-        hierarchical: {
-          direction: 'UD'
-        }
-      },
-      physics:false
-    };
-    let network = new vis.Network(container, data, options);
+  rewind() {
+    this.playing = true
+    interval(100)
+      .takeWhile(() => this.playing)
+      .subscribe( _ => this.stepBack())
+  }
+
+  stop() {
+    this.playing = false
   }
 
   compute() {
-    let fib = (recurse, n) => {
-      if(n <= 2) return 1
-      return recurse(n - 1) + recurse(n - 2)
-    }
-
     let fs = new FrameStream()
     let rs = new RecursiViz(new TreeSpy(fs))
 
-    let frames = []
     fs.frames$
-      .delay(1000)
-      .map( root => root.children[0] )
-      .subscribe( f => frames.push(f) )
+      .map( event => event )
+      .subscribe( event => {
+        console.log(event)
+        this.frames.push(event)
+      })
 
-    rs.visualize(fib, [7])
+    let memo = [];
+    rs.visualize(
+      (recurse, n) => {
+        if (n <= 2) return 1
+        // if(memo[n]) return memo[n]
+        memo[n] = recurse(n - 1) + recurse(n - 2)
+        return memo[n]
+      },
+      [7]
+    )
   }
 }
