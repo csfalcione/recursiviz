@@ -46,12 +46,20 @@ html, body {
 }
 
 #controls-panel {
+  display: flex;
   padding: 10px;
   background: #3e4b60;
 }
 
+#player-speed {
+  max-width: 100px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 #controls-wrapper {
   display: flex;
+  flex-grow: 5;
   justify-content: center;
 
   button {

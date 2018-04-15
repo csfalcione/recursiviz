@@ -39,7 +39,14 @@
 
         <div id="controls-panel">
 
+          <div id="player-speed">
+            <input *ngIf="!player" type="number" [(ngModel)]="speed" class="form-control player-speed-input" placeholder="200">
+            <input *ngIf="player" type="number" [(ngModel)]="player.speed" class="form-control player-speed-input" placeholder="200">
+          </div>
+
           <div id="controls-wrapper">
+
+
             <button *ngIf="!player || !player.playing" (click)="play()" type="button" class="btn btn-floating btn-success" title="play">
               <i class="icon fa-play"></i></button>
 

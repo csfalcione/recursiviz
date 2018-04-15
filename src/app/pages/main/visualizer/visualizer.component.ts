@@ -20,6 +20,7 @@ export class VisualizerComponent implements OnInit {
   player: VideoPlayer
   text: string = CODE_STUB
   args = '[ 5 ]'
+  speed = 200
 
   rv: RecursiViz
 
@@ -36,6 +37,7 @@ export class VisualizerComponent implements OnInit {
 
   initPlayer() {
     this.player = new VideoPlayer(new AppGraph('graph-canvas'))
+    this.player.speed = this.speed
 
     let fs = new FrameStream()
     let ts = new TreeSpy(fs)
@@ -48,13 +50,13 @@ export class VisualizerComponent implements OnInit {
     let argString = this.args
     let codeString = this.text
     this.initPlayer()
-    if (argString.trim() === '') argString = '[]'
+    if (argString.trim() === '') { argString = '[]' }
 
     let entrypoint
     eval(codeString)
     let _args = eval(argString)
-    if (!entrypoint) return alert('No function exported!')
-    if (!Array.isArray(_args)) return alert('Invalid args!')
+    if (!entrypoint) { return alert('No function exported!') }
+    if (!Array.isArray(_args)) { return alert('Invalid args!') }
 
     this.player = new VideoPlayer(new AppGraph('graph-canvas'))
     this.rv.visualize(entrypoint, _args)
@@ -70,7 +72,7 @@ export class VisualizerComponent implements OnInit {
   loadSnippet() {
     let key = prompt('Enter the snippet key: ')
     let snippet = localStorage[key]
-    if (!snippet) return alert('No snippet found!')
+    if (!snippet) { return alert('No snippet found!') }
     this.text = snippet
   }
 
