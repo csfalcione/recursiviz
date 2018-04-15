@@ -3,9 +3,22 @@
   <div id="main-wrapper">
 
     <div id="code-panel">
+
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" #argStringInput class="form-control" name="" placeholder="Enter JS Arguments.." value="[ 2 ]">
+          <span class="input-group-btn">
+            <button (click)="submitCode(argStringInput.value, text)" type="submit" class="btn btn-primary">
+              <i class="icon wb-upload"></i> Submit Code </button>
+          </span>
+        </div>
+      </div>
+
+
       <div ace-editor
            [(text)]="text"
-           style="height: 100%">
+           mode="javascript"
+           style="height: 400px; font-size: 18px">
       </div>
     </div>
 
@@ -26,7 +39,10 @@
             <button *ngIf="player.playing" (click)="player.pause()" type="button" class="btn btn-floating btn-danger" title="stop">
               <i class="icon fa-pause"></i></button>
 
-            <button (click)="player.back()" type="button" class="btn btn-floating btn-danger" title="step backward">
+            <button (click)="player.startOver()" type="button" class="btn btn-floating btn-warning" title="step backward">
+              <i class="icon fa-refresh"></i></button>
+
+            <button (click)="player.back()" type="button" class="btn btn-floating btn-primary" title="step backward">
               <i class="icon fa-angle-double-left"></i></button>
 
             <button (click)="player.forward()" type="button" class="btn btn-floating btn-primary" title="step forward">
