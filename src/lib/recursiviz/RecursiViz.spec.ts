@@ -1,5 +1,21 @@
 import {RecursiViz} from './RecursiViz'
 
+describe('eval', () => {
+  it('should mutate existing variables', () => {
+    let x = 20
+    eval('x = 10')
+    expect(x).toEqual(10)
+  })
+
+  it('should add new variables to the local scope', () => {
+    eval('var x = 10')
+    expect(x).toEqual(10)
+
+    eval('var helloWorld = () => { return "hello, world"; }')
+    expect(helloWorld()).toEqual('hello, world')
+  })
+})
+
 describe('rewriteUserInput', () => {
   it('should replace all but the first instance of the function name', () => {
     const rv = new RecursiViz(null)
