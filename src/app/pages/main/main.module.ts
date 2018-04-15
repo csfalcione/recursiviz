@@ -8,12 +8,17 @@ import {routes} from './main.routes'
 import {VisualizerComponent} from './visualizer/visualizer.component'
 
 import { AceEditorModule } from 'ng2-ace-editor';
+import {MatFormFieldModule, MatSliderModule} from '@angular/material'
+import {FormsModule} from '@angular/forms'
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routes),
-    AceEditorModule
+    AceEditorModule,
+    MatSliderModule,
+    MatFormFieldModule
   ],
   declarations: [NavbarComponent, MainComponent, WelcomeComponent, VisualizerComponent],
   exports: [

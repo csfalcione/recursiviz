@@ -20,21 +20,43 @@ export class VisualizerComponent implements OnInit {
   player: VideoPlayer
   text: string = CODE_STUB
 
-  ngOnInit() {
-    this.player = new VideoPlayer(new AppGraph('graph-canvas'))
-  }
+  rv: RecursiViz
 
-  submitCode(argString, codeString) {
+  ngOnInit() {
     this.player = new VideoPlayer(new AppGraph('graph-canvas'))
 
     let fs = new FrameStream()
     let ts = new TreeSpy(fs)
-    let rv = new RecursiViz(ts)
+    this.rv = new RecursiViz(ts)
 
-    fs.frames$/*.do( _ => console.log(_))*/.subscribe( frame => this.player.addFrame(frame) )
-    rv.visualizeText(codeString, 'fibonacci', argString)
+    fs.frames$.subscribe( frame => this.player.addFrame(frame) )
+  }
+
+  submitCode(argString, codeString) {
+    if (argString.trim() === '') argString = '[]'
+
+    let entrypoint
+    eval(codeString)
+    let _args = eval(argString)
+    if (!entrypoint) return alert('No function exported!')
+    if (!Array.isArray(_args)) return alert('Invalid args!')
+
+    this.player = new VideoPlayer(new AppGraph('graph-canvas'))
+    this.rv.visualize(entrypoint, _args)
     this.player.play()
   }
 
+  saveSnippet() {
+    let key = prompt("Enter the snippet key: ")
+    localStorage[key] = this.text
+    alert("Saved!")
+  }
+
+  loadSnippet() {
+    let key = prompt("Enter the snippet key: ")
+    let snippet = localStorage[key]
+    if(!snippet) return alert('No snippet found!')
+    this.text = snippet
+  }
 
 }
