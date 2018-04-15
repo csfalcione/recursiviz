@@ -6,10 +6,8 @@ export class RecursiViz {
 
     visualizeText(userInput: string, funcName: string, userArgs: string) {
       const args = this.parseArgs(userArgs)
-      console.log(args)
-
       userInput = this.rewriteUserInput(userInput, funcName, 'recurse')
-      console.log(userInput)
+
       let recurse = this.recurse.bind(this)
       let userFunc
       eval(userInput)
