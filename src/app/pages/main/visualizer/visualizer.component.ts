@@ -14,14 +14,23 @@ import {CODE_STUB} from './default-text'
   styleUrls: ['./visualizer.component.scss']
 })
 export class VisualizerComponent implements OnInit {
+  get speed(): number {
+    return this._speed
+  }
+
+  set speed(value: number) {
+    this._speed = value
+    if (this.player !== undefined) {
+      this.player.speed = value
+    }
+  }
 
   @ViewChild('editor') editor
 
   player: VideoPlayer
   text: string = CODE_STUB
   args = '[ 5 ]'
-  speed = 200
-
+  _speed = 200
   rv: RecursiViz
 
   ngOnInit() {
@@ -58,7 +67,6 @@ export class VisualizerComponent implements OnInit {
     if (!entrypoint) { return alert('No function exported!') }
     if (!Array.isArray(_args)) { return alert('Invalid args!') }
 
-    this.player = new VideoPlayer(new AppGraph('graph-canvas'))
     this.rv.visualize(entrypoint, _args)
     this.player.play()
   }

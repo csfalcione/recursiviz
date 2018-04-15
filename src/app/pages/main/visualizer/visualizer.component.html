@@ -40,8 +40,7 @@
         <div id="controls-panel">
 
           <div id="player-speed">
-            <input *ngIf="!player" type="number" [(ngModel)]="speed" class="form-control player-speed-input" placeholder="200">
-            <input *ngIf="player" type="number" [(ngModel)]="player.speed" class="form-control player-speed-input" placeholder="200">
+            <input type="number" [(ngModel)]="speed" class="form-control player-speed-input">
           </div>
 
           <div id="controls-wrapper">
