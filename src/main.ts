@@ -3,6 +3,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+// Needed to resolve ace editor themes and modes.
+import 'ace-builds/webpack-resolver'
 
 if (environment.production) {
   enableProdMode();

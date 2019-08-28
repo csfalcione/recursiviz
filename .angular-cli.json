@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "hope2go"
+    "name": "recursiviz"
   },
   "apps": [
     {
@@ -31,7 +31,9 @@
         "../src/assets/vendor/jquery/jquery.js",
         "../src/assets/vendor/popper-js/umd/popper.min.js",
         "../src/assets/vendor/bootstrap/bootstrap.js",
-        "../src/assets/vendor/animsition/animsition.js"
+        "../src/assets/vendor/animsition/animsition.js",
+        "../node_modules/ace-builds/src-min/ace.js",
+        "../node_modules/ace-builds/src-min/mode-properties.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

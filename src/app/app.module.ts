@@ -2,27 +2,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
-import {AuthModule} from './core/auth/auth.module';
-import {PagesModule} from './pages/pages.module';
-import {RouterModule} from '@angular/router';
-import {CommonModule} from '@angular/common'
+import { VisualizerComponent } from './visualizer/visualizer.component';
+import { AceEditorModule } from 'ng2-ace-editor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    VisualizerComponent,
   ],
   imports: [
+    AceEditorModule,
     BrowserModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    RouterModule,
-    PagesModule,
-    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
