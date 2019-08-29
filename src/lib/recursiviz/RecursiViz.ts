@@ -4,7 +4,7 @@ export class RecursiViz {
 
   func
 
-  visualize(myRecursiveFunction, ...args) {
+  visualize(myRecursiveFunction, args) {
     this.func = myRecursiveFunction
     this.recurse(...args)
   }
