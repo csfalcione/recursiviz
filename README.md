@@ -1,6 +1,7 @@
 # Recursiviz
 
 ![RecursiViz Dashboard](https://image.ibb.co/ifY7u7/screenshot.png)
+<a href="https://csfalcione.github.io/recursiviz">Try it out</a>
 
 ## About the Application
 If you know what a recursive function is, you know they can be difficult to wrap your head around. But what if you could watch any code run step-by-step, rewind, and repeat? This would provide valuable insights into its behavior. We've created an application that does just that!
